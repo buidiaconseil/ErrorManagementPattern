@@ -10,9 +10,43 @@ Error Management Pattern
 
 # Show plant uml
 
+
 # Manage by intermediate Flow
 
+# Retries fix or Exponential Backoff Wait time
 
+## Exponential Algorithm
+
+```
+/*
+ * Returns the next wait interval, in milliseconds, using an exponential
+ * backoff algorithm.
+ */
+public static long getWaitTimeExp(int retryCount,long maxTime) {
+
+    long waitTime = Math.min(maxTime,(long) Math.pow(2, retryCount) * 100L);
+
+    return waitTime;
+}
+```
+
+# Error classification
+
+## Causal 
+
+Incomplete / Erroneous Specification / Programming violation  -> DelQueue
+Issue on Connection , Time out, temporary defect -> Retry 
+
+
+## Delegation
+### Strategy pattern
+
+IErrorStrategieManagement
+
+### Exception 
+
+
+## Dictionary based
 
 
 

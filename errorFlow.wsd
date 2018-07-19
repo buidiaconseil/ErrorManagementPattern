@@ -3,6 +3,8 @@ queue PrincipalStream
 card ErrorManagement
 queue RetryStream
 card RetryManagement
+card AnalyticsMonitoring
+
 actor ManualOperation
 actor Consumer
 queue DelQueueStream
@@ -15,8 +17,12 @@ RetryManagement --> DelQueueStream : Retry KO
 
 ErrorManagement --> DelQueueStream : Not resolvable
 DelQueueStream -> ManualOperation : Manual 
-ManualOperation --> Database : Save Status
+ManualOperation <--> Database : Read and Save
 ManualOperation -> RetryStream : Retry
-Consumer <- PrincipalStream
-Consumer <- RetryStream
+Consumer <-l- PrincipalStream : Consume
+Consumer <- RetryStream  : Consume
+RetryStream ---> AnalyticsMonitoring 
+DelQueueStream --->AnalyticsMonitoring 
+AnalyticsMonitoring->ManualOperation : Alert And Monitor
+AnalyticsMonitoring -> Database  : Save Alert
 @enduml
