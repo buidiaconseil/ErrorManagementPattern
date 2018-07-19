@@ -1,0 +1,2 @@
+# ErrorManagementPattern
+Error Management Pattern
