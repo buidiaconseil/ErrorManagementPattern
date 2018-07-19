@@ -1,0 +1,22 @@
+@startuml
+queue PrincipalStream
+card ErrorManagement
+queue RetryStream
+card RetryManagement
+actor ManualOperation
+actor Consumer
+queue DelQueueStream
+database Database
+Consumer --> ErrorManagement : **Error detected**
+ErrorManagement --> RetryStream : Retry
+RetryManagement --> RetryStream : Retry
+RetryManagement --> RetryManagement : Wait
+RetryManagement --> DelQueueStream : Retry KO
+
+ErrorManagement --> DelQueueStream : Not resolvable
+DelQueueStream -> ManualOperation : Manual 
+ManualOperation --> Database : Save Status
+ManualOperation -> RetryStream : Retry
+Consumer <- PrincipalStream
+Consumer <- RetryStream
+@enduml

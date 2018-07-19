@@ -8,3 +8,11 @@ Error Management Pattern
 - Retry: if you don't succeed at first, try again
 - Retry with a delay : if you don't succeed at first, try again
 
+# Show plant uml
+
+# Manage by intermediate Flow
+
+
+
+
+
