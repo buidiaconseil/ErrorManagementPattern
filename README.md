@@ -15,6 +15,8 @@ Error Management Pattern
 
 # Retries fix or Exponential Backoff Wait time
 
+## Fix Retry
+
 ## Exponential Algorithm
 
 ```
@@ -22,9 +24,9 @@ Error Management Pattern
  * Returns the next wait interval, in milliseconds, using an exponential
  * backoff algorithm.
  */
-public static long getWaitTimeExp(int retryCount,long maxTime) {
+public static long getWaitTimeExp(int retryCount) {
 
-    long waitTime = Math.min(maxTime,(long) Math.pow(2, retryCount) * 100L);
+    long waitTime = (maxTime,(long) Math.pow(2, retryCount) * 100L);
 
     return waitTime;
 }
@@ -38,15 +40,57 @@ Incomplete / Erroneous Specification / Programming violation  -> DelQueue
 Issue on Connection , Time out, temporary defect -> Retry 
 
 
-## Delegation
-### Strategy pattern
-
-IErrorStrategieManagement
+## Error Delegation
 
 ### Exception 
 
-
 ## Dictionary based
+
+### Annotation Pattern
+
+interface RouteMessage () {
+    void route();
+}
+
+interface ErrorClassifier (){
+    RouteMessage route (String Config , Exception e,Message message);
+}
+
+
+@Retention(RUNTIME)
+@Target({ METHOD, TYPE })
+public @interface ManageError { 
+	String config() default "default";
+
+    // Ordered By Priority
+	ErrorClassifier[] classifier() default DefaultErrorClassifier;
+}
+
+class DictionnaryBased extend ErrorClassifier
+class ExceptionBased extend ErrorClassifier
+class CustomBased extend ErrorClassifier
+
+## Retry Delegation
+
+interface RetryStrategy  {
+    void retry (RouteMessage message)
+}
+
+@Retention(RUNTIME)
+@Target({ METHOD, TYPE })
+public @interface ManageRecovery {
+    String config() default "default"
+	long minDelayBeforeRetry() default 3000;
+	int nbRetry() default 10;
+    // Strategy 
+	RetryStrategy retryStrategy default DefaultRetryStrategy;
+}
+
+class ExponentialRetry extend RetryStrategy
+class FixRetry extend RetryStrategy
+class CustomRetry extend RetryStrategy
+
+
 
 
 
