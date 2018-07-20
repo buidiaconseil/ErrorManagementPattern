@@ -1,14 +1,25 @@
 @startuml
+
+rectangle "Normal Stream"  {
 queue PrincipalStream
+actor Consumer
+}
+
+rectangle "Errors with retries"  {
 card ErrorManagement
 queue RetryStream
 card RetryManagement
-card AnalyticsMonitoring
 
-actor ManualOperation
-actor Consumer
 queue DelQueueStream
+}
+rectangle "Supervision"  {
+    card AnalyticsMonitoring
+actor ManualOperation
+
+
 database Database
+}
+
 Consumer --> ErrorManagement : **Error detected**
 ErrorManagement --> RetryStream : Can Retry
 
@@ -18,11 +29,11 @@ PrincipalStream <-- RetryManagement : Retry
 
 ErrorManagement --> DelQueueStream : Not resolvable
 DelQueueStream --> ManualOperation : Consume 
-ManualOperation <--> Database : Read and Save
+ManualOperation <--> Database 
 ManualOperation -> RetryStream : Produce
 Consumer <-l- PrincipalStream : Consume
-RetryStream ---> AnalyticsMonitoring : Analyze
-DelQueueStream --->AnalyticsMonitoring : Analyze
+RetryStream ---> AnalyticsMonitoring : Consume
+DelQueueStream --->AnalyticsMonitoring : Consume
 AnalyticsMonitoring->ManualOperation : Alert And Monitor
-AnalyticsMonitoring -> Database  : Save 
+AnalyticsMonitoring <-> Database    
 @enduml
