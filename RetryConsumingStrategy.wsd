@@ -1,0 +1,26 @@
+@startuml
+
+Headers : correlationId()
+Headers : onError()
+Headers : nbRetry()
+
+
+WaitTime : unite()
+WaitTime : time()
+
+WaitTime : nextTimeWait() 
+
+Payload : data()
+
+
+RecordKafka : Headers headers()
+RecordKafka : WaitTime key()
+RecordKafka : Payload value()
+RecordKafka : Date recorded()
+
+RecordKafka o-- Payload
+RecordKafka o-- Headers
+RecordKafka o-- WaitTime
+
+
+@enduml

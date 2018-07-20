@@ -1,0 +1,34 @@
+@startuml
+
+concise "All partitions" as WU
+concise "5 minutes partition" as W5M
+concise "10 minutes partition" as W10M
+
+@0
+WU is 5Min
+W5M is 5Min
+
+@5
+WU is 10Min
+W5M is "5Min"
+W10M is 10Min
+@10
+W5M is "5Min"
+WU -> W10M@10
+@15
+WU is 5Min
+W5M is "5Min"
+W10M is 10Min
+WU -> W5M@7
+@20
+W5M is "5Min"
+
+WU is 10Min
+@25
+W5M is "5Min"
+W10M is "10Min"
+WU -> W10M@20
+
+
+
+@enduml

@@ -1,6 +1,6 @@
 @startuml
 
-rectangle "Normal Stream"  {
+rectangle "Stream"  {
 queue PrincipalStream
 actor Consumer
 }
@@ -19,6 +19,10 @@ actor ManualOperation
 
 database Database
 }
+
+entity entry
+
+entry -> PrincipalStream
 
 Consumer --> ErrorManagement : **Error detected**
 ErrorManagement --> RetryStream : Can Retry

@@ -94,3 +94,14 @@ class CustomRetry extend RetryStrategy
 
 
 
+Redundancy
+
+Interleaving
+
+Throttling
+
+Early Bailout
+
+NeedOnlyOne
+
+Interleaved Operations

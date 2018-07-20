@@ -1,0 +1,49 @@
+@startuml
+
+group Kafka Stream Processed
+entity RetryStream
+entity Offset
+entity PrincipalStream
+
+end
+
+
+control Producer
+control Consumer
+collections  RetryManager
+
+
+RetryManager -> Consumer : List partitions of the topic
+RetryManager <- Consumer 
+loop on partition
+
+RetryManager -> Consumer : assign partition and poll one second
+RetryStream <- Consumer : Get Records
+RetryStream -> Consumer : Get Records
+loop on records
+	       
+    Consumer -> RetryManager : Get Next Record
+    RetryManager -> RetryManager : Is time ?
+    alt successful 
+        RetryManager -> Producer : push the payload
+        Producer -> PrincipalStream : push the record
+        Producer <- PrincipalStream
+        RetryManager <- Producer
+        RetryManager -> Consumer : Commit
+        Consumer -> Offset : push and commit
+        Consumer <- Offset 
+        RetryManager <- Consumer
+    else
+        RetryManager->RetryManager: break and go to the next partition
+    end
+    
+
+end
+RetryManager -> Consumer : refresh partitions list
+RetryManager <- Consumer 
+
+end
+
+
+
+@enduml
