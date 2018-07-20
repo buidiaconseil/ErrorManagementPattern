@@ -110,3 +110,43 @@ Early Bailout
 NeedOnlyOne
 
 Interleaved Operations
+
+ error-correcting
+codes, checkpoint followed by rollback and replay [8, 9, 16]
+and redundant computation.
+
+acceptability-oriented  computing  [17],  task  skipping  [18],
+failure-oblivious computing [19], transactional function ter-
+mination [21, 22], exiting infinite loops [3], automatic patch
+Copyright is held by the author/owner(s).
+AOSD ’12,
+March 25-30, 2012, Potsdam, Germany.
+ACM 978-1-4503-1222-6/12/03.
+1
+generation [15, 25], software rejuventation [24], recovery-
+oriented  computing  [2],  heap  overprovisioning  [1],  input
+rectification [11], and data structure repair [5–7, 12, 20, 26].
+
+generation [15, 25], software rejuventation [24], recovery-
+oriented  computing  [2],  heap  overprovisioning  [1],  input
+rectification [11], and data structure repair [5–7, 12, 20, 26].
+Because such techniques may have effects that easily propa-
+gate across module boundaries, understanding their accept-
+ability often requires the adoption of an end-to-end perspec-
+tive that takes the larger goals of the complete system into
+account.
+Finally,  we  consider  the  emerging  field  of  approximate
+computing. Inspired by the surprising ability that many soft-
+ware systems exhibit to tolerate perturbations or even large-
+scale  changes  to  their  execution  (for  example,  loop  per-
+foration  [13,  23],  which  simply  skips  iterations  of  time-
+consuming  loops),  researchers  are  now  exploring  a  vari-
+ety  of  techniques  that  purposefully  adapt  the  functional-
+ity  that  a  system  provides  to  obtain  benefits  such  as  im-
+proved  performance,  reduced  energy  consumption,  or  ro-
+bustness [4, 10, 14, 27]. The initial success of these tech-
+niques suggests that it may now be possible to move toward
+a world in which the dominant software systems exhibit un-
+precedented flexibility, malleability, and adaptability with-
+out requiring engineers to understand precisely how or why
+they are able to do so
