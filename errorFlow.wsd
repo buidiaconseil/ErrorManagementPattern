@@ -10,19 +10,19 @@ actor Consumer
 queue DelQueueStream
 database Database
 Consumer --> ErrorManagement : **Error detected**
-ErrorManagement --> RetryStream : Retry
-RetryManagement --> RetryStream : Retry
+ErrorManagement --> RetryStream : Can Retry
+
+RetryManagement <-- RetryStream : Consume
 RetryManagement --> RetryManagement : Wait
-RetryManagement --> DelQueueStream : Retry KO
+PrincipalStream <-- RetryManagement : Retry
 
 ErrorManagement --> DelQueueStream : Not resolvable
-DelQueueStream -> ManualOperation : Manual 
+DelQueueStream --> ManualOperation : Consume 
 ManualOperation <--> Database : Read and Save
-ManualOperation -> RetryStream : Retry
+ManualOperation -> RetryStream : Produce
 Consumer <-l- PrincipalStream : Consume
-Consumer <- RetryStream  : Consume
-RetryStream ---> AnalyticsMonitoring 
-DelQueueStream --->AnalyticsMonitoring 
+RetryStream ---> AnalyticsMonitoring : Analyze
+DelQueueStream --->AnalyticsMonitoring : Analyze
 AnalyticsMonitoring->ManualOperation : Alert And Monitor
-AnalyticsMonitoring -> Database  : Save Alert
+AnalyticsMonitoring -> Database  : Save 
 @enduml
