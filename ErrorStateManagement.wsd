@@ -1,13 +1,15 @@
 @startuml
 
-[*] --> Error : Error detected
-Error --> Done : Resolved
-Error -> Retry : Retry n times
-Retry --> Error : Try
-Error --> Wait : Wait before retry
+[*] ---> Detect : Error detected
+Detect --> Done : Resolved
+Error --> Retry : Retry n times
+Retry --> Detect : Try
+Detect -> Error : On error
+
+Error -> Wait : Wait before retry
 Wait -> Retry : Retry
-Error --> [*] : Not resolved
-Done --> [*] : Message Ok
+Error ---> [*] : Not resolved
+Done ---> [*] : Message Ok
 
 
 @enduml
