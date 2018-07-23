@@ -15,7 +15,7 @@ Error Management Pattern
 ![alternative text](http://www.plantuml.com/plantuml/proxy?src=https://raw.github.com/buidiaconseil/ErrorManagementPattern/master/RetryFlow.wsd)
 ![alternative text](http://www.plantuml.com/plantuml/proxy?src=https://raw.github.com/buidiaconseil/ErrorManagementPattern/master/errorFlow.wsd)
 
-![alternative text](http://www.plantuml.com/plantuml/proxy?src=https://raw.github.com/buidiaconseil/ErrorManagementPattern/master/errorFlow2.wsd)
+![alternative text](http://www.plantuml.com/plantuml/proxy?src=https://raw.github.com/buidiaconseil/ErrorManagementPattern/master/RetryFlow2.wsd)
 # Manage by intermediate Flow
 
 # Retries fix or Exponential Backoff Wait time
