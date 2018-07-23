@@ -55,6 +55,7 @@ Issue on Connection , Time out, temporary defect -> Retry
 
 ## Retry Delegation
 
+```
 @Retention(RUNTIME)
 @Target({ METHOD, TYPE })
 public @interface RetryManager {
@@ -71,7 +72,7 @@ public @interface RetryManager {
 
 }
 
-
+```
 
 
 
