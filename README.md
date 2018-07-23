@@ -15,7 +15,7 @@ Error Management Pattern
 ![alternative text](http://www.plantuml.com/plantuml/proxy?src=https://raw.github.com/buidiaconseil/ErrorManagementPattern/master/RetryFlow.wsd)
 ![alternative text](http://www.plantuml.com/plantuml/proxy?src=https://raw.github.com/buidiaconseil/ErrorManagementPattern/master/errorFlow.wsd)
 
-
+![alternative text](http://www.plantuml.com/plantuml/proxy?src=https://raw.github.com/buidiaconseil/ErrorManagementPattern/master/errorFlow2.wsd)
 # Manage by intermediate Flow
 
 # Retries fix or Exponential Backoff Wait time
@@ -53,47 +53,26 @@ Issue on Connection , Time out, temporary defect -> Retry
 
 ### Annotation Pattern
 
-interface RouteMessage () {
-    void route();
-}
-
-interface ErrorClassifier (){
-    RouteMessage route (String Config , Exception e,Message message);
-}
-
-
-@Retention(RUNTIME)
-@Target({ METHOD, TYPE })
-public @interface ManageError { 
-	String config() default "default";
-
-    // Ordered By Priority
-	ErrorClassifier[] classifier() default DefaultErrorClassifier;
-}
-
-class DictionnaryBased extend ErrorClassifier
-class ExceptionBased extend ErrorClassifier
-class CustomBased extend ErrorClassifier
-
 ## Retry Delegation
 
-interface RetryStrategy  {
-    void retry (RouteMessage message)
-}
-
 @Retention(RUNTIME)
 @Target({ METHOD, TYPE })
-public @interface ManageRecovery {
-    String config() default "default"
-	long minDelayBeforeRetry() default 3000;
+public @interface RetryManager {
+
+	enum TimeDelay {
+		FIVE_SECONDS,TEN_SECONDS,THIRTY_SECONDS,ONE_MINUTE,FIVE_MINUTES,TEN_MINUTES,FIFTEEN_MINUTES,THIRTY_MINUTES,ONE_HOUR,TWO_HOURS,FIVE_HOURS
+	}
+	
+	@Nonbinding
+	TimeDelay [] delaysBeforeRetry() default {TimeDelay.FIVE_SECONDS, TimeDelay.TEN_SECONDS,TimeDelay.THIRTY_SECONDS,TimeDelay.ONE_MINUTE,TimeDelay.FIVE_MINUTES,TimeDelay.TEN_MINUTES,TimeDelay.FIFTEEN_MINUTES};
+
+	@Nonbinding
 	int nbRetry() default 10;
-    // Strategy 
-	RetryStrategy retryStrategy default DefaultRetryStrategy;
+
 }
 
-class ExponentialRetry extend RetryStrategy
-class FixRetry extend RetryStrategy
-class CustomRetry extend RetryStrategy
+
+
 
 
 
