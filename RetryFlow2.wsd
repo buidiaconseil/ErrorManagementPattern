@@ -21,7 +21,7 @@ RetryStream -> Consumer : Get Records
 RetryManager <- Consumer : Get Records
 loop on records
 	       
-    Consumer -> RetryManager : Get Next Record
+    RetryManager -> RetryManager : Get Next Record
     RetryManager -> RetryManager : Is time ?
     alt successful 
         RetryManager -> Producer : push the payload
@@ -33,13 +33,11 @@ loop on records
         Consumer <- Offset 
         RetryManager <- Consumer
     else
-        RetryManager->RetryManager: break and go to the next partition/record
+        RetryManager->RetryManager: go to the next partition/record
     end
     
 
 end
-RetryManager -> Consumer : refresh partitions list
-RetryManager <- Consumer 
 
 end
 

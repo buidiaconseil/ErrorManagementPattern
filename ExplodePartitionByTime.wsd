@@ -1,34 +1,40 @@
 @startuml
 
+Title Partitions of Retry Stream
+
 concise "All partitions" as WU
-concise "5 minutes partition" as W5M
-concise "10 minutes partition" as W10M
+concise "First partition" as W5M
+concise "Second partition" as W10M
 
 @0
-WU is 5Min
-W5M is 5Min
+WU is "1-Retry"
+W5M is "1-Retry"
 
 @5
-WU is 10Min
-W5M is "5Min"
-W10M is 10Min
+WU is "SecondRetry"
+W5M is "1-Retry"
+W10M is "SecondRetry"
 @10
-W5M is "5Min"
+W5M is "1-Retry"
 WU -> W10M@10
 @15
-WU is 5Min
-W5M is "5Min"
-W10M is 10Min
+WU is "1-Retry"
+W5M is "1-Retry"
+W10M is "SecondRetry"
 WU -> W5M@7
 @20
-W5M is "5Min"
+W5M is "1-Retry"
 
-WU is 10Min
+WU is "SecondRetry"
 @25
-W5M is "5Min"
-W10M is "10Min"
+W5M is "1-Retry"
+W10M is "SecondRetry"
 WU -> W10M@20
 
+legend
+One Partition = One Retry Group.
+Number of Partition >= Number of Retry.
+end legend
 
 
 @enduml
