@@ -22,7 +22,7 @@ RetryManager <- Consumer : Get Records
 loop on records
 	       
     RetryManager -> RetryManager : Get Next Record
-    RetryManager -> RetryManager : Is time ?
+    RetryManager -> RetryManager : Is it time ?
     alt successful 
         RetryManager -> Producer : push the payload
         Producer -> PrincipalStream : push the record
