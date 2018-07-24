@@ -1,0 +1,34 @@
+@startuml
+
+entity entry
+rectangle "Stream"  {
+queue PrincipalStream
+actor Consumer
+}
+rectangle "Manual Error Management"  {
+card ErrorManagement
+queue DelQueueStream
+
+card ErrorInitializer
+actor ManualOperation
+database Database
+
+}
+
+entry -l-> PrincipalStream :  __""**1**""__ - Push Flow 
+Consumer <-l- PrincipalStream : 2- Consume
+Consumer --> ErrorManagement : 3 - **Error detected**
+ErrorManagement --> DelQueueStream : 4 - Not resolvable
+DelQueueStream --> ErrorInitializer :  5 - Consume
+ErrorInitializer -> Database : 6 - Create new Record
+
+
+note left of Consumer : Web Service only
+
+
+ManualOperation <- Database : 7 - List uncorrected Errors 
+ManualOperation -> DelQueueStream : 8 - Check Errors 
+ManualOperation -> PrincipalStream : 9 - Replay corrected Errors
+ManualOperation -> Database : 10 - Remove resolved Errors
+
+@enduml
