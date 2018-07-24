@@ -23,7 +23,7 @@ DelQueueStream --> ErrorInitializer :  5 - Consume
 ErrorInitializer -> Database : 6 - Create new Record
 
 
-note left of Consumer : Web Service only
+
 
 
 ManualOperation <- Database : 7 - List uncorrected Errors 
